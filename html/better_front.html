@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body {
+	margin: 0 auto 0 auto;
+	padding: 0px;
+}
+
+h1 {
+	margin: 10px;
+}
+
+.submission {
+	width: 90%;
+	border: 0px solid black;
+	padding: 10px;
+	margin: 10px;
+	font-size: x-large;
+}
+
+.peak_rank {
+	color: gray;
+}
+
+.submitter, .points, .age, .comments {
+	color: white;
+	padding: 2px;
+}
+
+.info_row a {
+	color: white;
+}
+
+.info_row {
+	font-size: small;
+	font-family: Arial;
+}
+
+</style>
+</head>
+<body>
+<h1>Hacker News</h1>
+
+{% for submission in data %}
+<div class="submission">
+	<!-- <img src="/static/blue_up_arrow.png" height="30" width="30"> -->
+	<strong title="Current Rank">{{ submission.current_rank }}.</strong>
+
+	<a href="{{ submission.url }}">{{ submission.title }}</a>
+	<br>
+	<span class="info_row">
+		
+		<span class="points" style="background: {{ submission.points_color }}">{{ submission.points }} Points</span>
+		
+		<a href="http://hn-karma-tracker.herokuapp.com/user/{{ submission.submitter }}.html"><span title="Submitter" class="submitter" style="background: {{ submission.submitter_color }}">by {{ submission.submitter }}</span></a>
+
+		{% if submission.age < 1 %}
+		<span class="age" style="background: {{ submission.age_color }}">{{ (submission.age * 60)|int }} minutes old</span>
+		{% elif submission.age > 48 %}
+		<span class="age" style="background: {{ submission.age_color }}">Submitted: {{ submission.date_created }}</span>
+		{% else %}
+		<span class="age" style="background: {{ submission.age_color }}">{{ submission.age|round(2) }} hours old</span>
+		{% endif %}
+
+		<a href="https://news.ycombinator.com/item?id={{ submission.hn_id }}"><span class="comments" style="background: {{ submission.comments_color }}">{{ submission.comments }} Comments</span></a>
+
+		<span title="Peak Rank" class="peak_rank">Peak Rank: {{ submission.peak_rank }}
+		{% if submission.peak_rank == 1 %}
+		<img src="/static/star.png" width="16" height="16">
+		{% endif %}
+		</span>
+		
+	</span>
+		
+</div>
+{% endfor %}
+</body>
+</html>
