@@ -107,17 +107,11 @@ class Submission(Base):
 		if percentile < 50:
 			return 'orange'
 		if percentile < 80:
-			return 'orangered'
-		if percentile < 95:
 			return 'red'
+		if percentile < 95:
+			return 'darkred'
 
-		return 'darkred'
-
-	def make_gradient(self):
-		c1 = Color('red')
-		c2 = Color('yellow')
-		color_range = list(c1.range_to(c2, 10))
-		return color_range
+		return 'black'
 
 	@property
 	def points_color(self):
@@ -132,7 +126,9 @@ class Submission(Base):
 			return "orangered"
 		if self.points < 1000:
 			return 'red'
-		return "darkred"
+		if self.points < 2000:
+			return 'darkred'
+		return "black"
 		
 
 	@property
@@ -141,13 +137,13 @@ class Submission(Base):
 			return 'lime'
 		if self.comments < 20:
 			return 'green'
-		if self.comments < 200:
+		if self.comments < 100:
 			return 'orange'
-		if self.comments < 500:
+		if self.comments < 300:
 			return 'orangered'
-		if self.comments < 1000:
+		if self.comments < 900:
 			return 'red'
-		if self.comments < 2500:
+		if self.comments < 1500:
 			return 'darkred'
 
 		return 'black'

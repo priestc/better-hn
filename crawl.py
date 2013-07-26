@@ -49,6 +49,10 @@ def parse_front_page(html):
 	comment_counts = []
 	for tag in soup.find_all(href=re.compile("item\?id=(\d){7,8}")):
 		# go through each link that looks like a comments link.
+		
+		if 'comment' not in tag.text:
+			continue
+
 		if tag.text == "discuss":
 			text = 0
 		elif tag.text == '1 comment':
