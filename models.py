@@ -106,8 +106,10 @@ class Submission(Base):
 		if percentile < 50:
 			return 'orange'
 		if percentile < 80:
-			return 'red'
+			return 'orangered'
 		if percentile < 95:
+			return 'red'
+		if percentile < 99:
 			return 'darkred'
 
 		return 'black'

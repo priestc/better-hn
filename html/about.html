@@ -1,6 +1,6 @@
-<!DOCTYPE html>
-<html>
-	<head>
+{% extends 'base.html' %}
+
+{% block content %}
 	<style>
 		h2 {
 			color: white;
@@ -53,7 +53,7 @@
 		<h2 class="orangered">OrangeRed</h2>
 		<ul>
 			<li><strong>Points:</strong> less than 500</li>
-			<li><strong>Submitter:</strong> Not used</li>
+			<li><strong>Submitter:</strong> has a karma score less than 80% users amoung same registration month</li>
 			<li><strong>Age of Submission:</strong> less than 12 hours old</li>
 			<li><strong>Comments:</strong> less than 300</li>
 		</ul>
@@ -61,7 +61,7 @@
 		<h2 class="red">Red</h2>
 		<ul>
 			<li><strong>Points:</strong> less than 1000</li>
-			<li><strong>Submitter:</strong> has a karma score lower than 80% users amoung same registration month</li>
+			<li><strong>Submitter:</strong> has a karma score lower than 95% users amoung same registration month</li>
 			<li><strong>Age of Submission:</strong> less than 24 hours old</li>
 			<li><strong>Comments:</strong> less than 900</li>
 		</ul>
@@ -69,7 +69,7 @@
 		<h2 class="darkred">DarkRed</h2>
 		<ul>
 			<li><strong>Points:</strong> less than 2000</li>
-			<li><strong>Submitter:</strong> has a karma score lower than 95% users amoung same registration month</li>
+			<li><strong>Submitter:</strong> has a karma score lower than 99% users amoung same registration month</li>
 			<li><strong>Age of Submission:</strong> less than 48 hours old</li>
 			<li><strong>Comments:</strong> less than 1500</li>
 		</ul>
@@ -77,9 +77,8 @@
 		<h2 class="black">Black</h2>
 		<ul>
 			<li><strong>Points:</strong> over 2000</li>
-			<li><strong>Submitter:</strong> has a karma score higher than 95% users amoung same registration month</li>
+			<li><strong>Submitter:</strong> has a karma score higher than 99% users amoung same registration month</li>
 			<li><strong>Age of Submission:</strong> over 48 hours old</li>
 			<li><strong>Comments:</strong> over 1500</li>
 		</ul>
-	</body>
-</html>
+{% endblock %}
