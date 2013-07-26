@@ -3,6 +3,7 @@ import requests
 
 from giotto import get_config
 Base = get_config("Base")
+
 from colour import Color
 from sqlalchemy import Column, Integer, String, ForeignKey, Date, DateTime, Boolean, func, desc, PickleType
 
@@ -29,6 +30,7 @@ class Submission(Base):
 	comments = Column(Integer)
 	points = Column(Integer)
 	submitter = Column(String)
+	domain = Column(String)
 
 	def __repr__(self):
 		rank = "(#%s)" % self.current_rank if self.current_rank else ''
@@ -56,6 +58,8 @@ class Submission(Base):
 			except AttributeError:
 				submission = Submission(date_created=datetime.datetime.now(), **sub)
 				session.add(submission)
+				print "New submission found... getting %s's karma percentile" % submission.submitter
+				submission.submitter_color # to warm up the cache
 				new += 1
 
 		session.commit()
@@ -67,8 +71,20 @@ class Submission(Base):
 		Return a hex color representing the age of this submission. Green ==
 		new, brown == old. 
 		"""
-		#return "#0F0"
-		return color_range('green', 'brown', self.age, 24)
+		if self.age < 0.5:
+			return 'lime'
+		if self.age < 1:
+			return 'green'
+		if self.age < 6.0:
+			return 'orange'
+		if self.age < 12.0:
+			return 'orangered'
+		if self.age < 24.0:
+			return 'red'
+		if self.age < 48.0:
+			return 'darkred'
+		
+		return 'black'
 
 	@property
 	def submitter_color(self):
@@ -84,32 +100,55 @@ class Submission(Base):
 		
 		percentile = float(json['month_data']['percentile']) * 100
 
-		if percentile < 20:
+		if percentile < 10:
 			return 'lime'
-		if percentile < 50:
+		if percentile < 30:
 			return 'green'
-		if percentile < 80:
+		if percentile < 50:
 			return 'orange'
-		
-		return 'red'
+		if percentile < 80:
+			return 'orangered'
+		if percentile < 95:
+			return 'red'
+
+		return 'darkred'
+
+	def make_gradient(self):
+		c1 = Color('red')
+		c2 = Color('yellow')
+		color_range = list(c1.range_to(c2, 10))
+		return color_range
 
 	@property
 	def points_color(self):
 		#return "#093"
-		return color_range('blue', 'red', self.points, 1000)
+		if self.points < 10:
+			return "lime"
+		if self.points < 50:
+			return "green"
+		if self.points < 100:
+			return "orange"
+		if self.points < 500:
+			return "orangered"
+		if self.points < 1000:
+			return 'red'
+		return "darkred"
+		
 
 	@property
 	def comments_color(self):
-		if self.comments == 0:
+		if self.comments < 10:
 			return 'lime'
 		if self.comments < 20:
 			return 'green'
-		if self.comments < 100:
+		if self.comments < 200:
 			return 'orange'
 		if self.comments < 500:
-			return 'crimson'
+			return 'orangered'
 		if self.comments < 1000:
-			return 'brown'
+			return 'red'
+		if self.comments < 2500:
+			return 'darkred'
 
 		return 'black'
 

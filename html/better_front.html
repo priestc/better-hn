@@ -37,6 +37,16 @@ h1 {
 	font-family: Arial;
 }
 
+.title {
+	color: black;
+	text-decoration: none;
+	font-size: x-large;
+}
+
+.domain {
+	color: silver;
+}
+
 </style>
 </head>
 <body>
@@ -47,12 +57,10 @@ h1 {
 	<!-- <img src="/static/blue_up_arrow.png" height="30" width="30"> -->
 	<strong title="Current Rank">{{ submission.current_rank }}.</strong>
 
-	<a href="{{ submission.url }}">{{ submission.title }}</a>
+	<a href="{{ submission.url }}" class="title">{{ submission.title }} <span class="domain">({{ submission.domain }})</span></a>
 	<br>
 	<span class="info_row">
-		
-		<span class="points" style="background: {{ submission.points_color }}">{{ submission.points }} Points</span>
-		
+		<span class="points" style="background: {{ submission.points_color }}">{{ submission.points }} Points{% if submission.points > 1000 %}<img src="/static/fire.png" width="16" height="16">{% endif %}</span>		
 		<a href="http://hn-karma-tracker.herokuapp.com/user/{{ submission.submitter }}.html"><span title="Submitter" class="submitter" style="background: {{ submission.submitter_color }}">by {{ submission.submitter }}</span></a>
 
 		{% if submission.age < 1 %}
@@ -63,17 +71,17 @@ h1 {
 		<span class="age" style="background: {{ submission.age_color }}">{{ submission.age|round(2) }} hours old</span>
 		{% endif %}
 
-		<a href="https://news.ycombinator.com/item?id={{ submission.hn_id }}"><span class="comments" style="background: {{ submission.comments_color }}">{{ submission.comments }} Comments</span></a>
+		<a href="https://news.ycombinator.com/item?id={{ submission.hn_id }}"><span class="comments" style="background: {{ submission.comments_color }}">{{ submission.comments }} Comments{% if submission.comments > 1000 %}<img src="/static/fire.png" width="16" height="16">{% endif %}</span></a>
 
 		<span title="Peak Rank" class="peak_rank">Peak Rank: {{ submission.peak_rank }}
 		{% if submission.peak_rank == 1 %}
 		<img src="/static/star.png" width="16" height="16">
 		{% endif %}
 		</span>
-		
 	</span>
 		
 </div>
 {% endfor %}
+
 </body>
 </html>

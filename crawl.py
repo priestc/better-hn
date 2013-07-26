@@ -4,6 +4,19 @@ import requests
 from bs4 import BeautifulSoup
 from models import Submission
 
+def parse_out_title(text):
+	"""
+	In comes a title directly from the hacker news html page
+	This function removes the domain in parenthesis, and returns
+	both the domain and the full title
+	in -> "title (domain.com)"
+	out-> ("title", "domain.com")
+	"""
+	match = re.search(r'\([\d\w\.]+\)$', text)
+	just_domain = match.group()[1:-1]
+	title = text[:(len(just_domain)+2) * -1].strip()
+	return title, just_domain
+
 def parse_front_page(html):
 	"""
 	In comes the HTML of the hacker news front page,
@@ -14,10 +27,16 @@ def parse_front_page(html):
 
 	titles = []
 	urls = []
+	domains = []
 	for tag in soup.find_all('td', class_='title'):
-		if not tag.text.endswith('.'):
-			titles.append(tag.text.strip())
+		if not tag.text.endswith('.') and "(" in tag.text:
+			# ignore when there is a peroid present, (that is the rank, not relevent here)
+			# and ignore when no parenthesis (the "More" link)
+			title = tag.text.strip()
+			just_title, domain = parse_out_title(title)
+			titles.append(just_title)
 			urls.append(tag.a['href'])
+			domains.append(domain)
 
 	data = []
 	for tag in soup.find_all('td', class_='subtext'):
@@ -47,6 +66,7 @@ def parse_front_page(html):
 			'current_rank': i + 1,
 			'title': titles[i].encode('ascii', 'xmlcharrefreplace'),
 			'url': unicode(urls[i]),
+			'domain': domains[i],
 			'comments': comment_counts[i],
 			"submitter": unicode(data[i][1]),
 			"points": unicode(data[i][0]),
