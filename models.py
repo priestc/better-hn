@@ -31,6 +31,11 @@ class Submission(Base):
 	submitter = Column(String)
 	domain = Column(String)
 
+	def __init__(self, *a, **k):
+		super(Submission, self).__init__(*a, **k)
+		if not self.peak_rank:
+			self.peak_rank = self.current_rank
+
 	def __repr__(self):
 		rank = "(#%s)" % self.current_rank if self.current_rank else ''
 		return "<Submission %s:%s %s>" % (
