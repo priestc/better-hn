@@ -4,7 +4,6 @@ import requests
 from giotto import get_config
 Base = get_config("Base")
 
-from colour import Color
 from sqlalchemy import Column, Integer, String, ForeignKey, Date, DateTime, Boolean, func, desc, PickleType
 
 def color_range(color_start, color_end, value, max_value):
