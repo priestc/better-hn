@@ -1,60 +1,6 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<style>
-body {
-	margin: 0 auto 0 auto;
-	padding: 0px;
-}
-
-h1 {
-	margin: 10px;
-}
-
-.submission {
-	width: 90%;
-	border: 0px solid black;
-	padding: 10px;
-	margin: 10px;
-	font-size: x-large;
-}
-
-.peak_rank {
-	color: gray;
-}
-
-.submitter, .points, .age, .comments {
-	color: white;
-	padding: 2px;
-}
-
-.info_row a {
-	color: white;
-}
-
-.info_row {
-	font-size: small;
-	font-family: Arial;
-}
-
-.title {
-	color: black;
-	text-decoration: none;
-	font-size: x-large;
-}
-
-.domain {
-	color: silver;
-}
-
-footer {
-	text-align: center;
-}
-
-</style>
-</head>
-<body>
-<h1>Better Hacker News</h1>
 
 {% for submission in data %}
 <div class="submission">

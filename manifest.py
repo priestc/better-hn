@@ -20,6 +20,11 @@ manifest = ProgramManifest({
             html=jinja_template('better_front.html'),
         ),
     ),
+    'about': GiottoProgram(
+        view=BasicView(
+            html=jinja_template('about.html')
+        ),
+    ),
     'crawl': GiottoProgram(
         controllers=['cmd'],
         model=[crawl],

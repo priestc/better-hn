@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link href="/static/base.css" media="all" rel="stylesheet" type="text/css" />
+	{% block extrahead %}{% endblock %}
+</head>
 <body>
+<a href="/"><img src="https://news.ycombinator.com/y18.gif" height="24" width="24"></a><h1>Better Hacker News</h1>
+
 {% block content %}{% endblock %}
 <footer><a href="/about">About</a> * <a href="https://github.com/priestc/better-hn">Github</a></footer>
 </body>

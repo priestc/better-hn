@@ -1,0 +1,14 @@
+h3 {
+	color: white;
+	width: 10em;
+	padding: 3px;
+	text-align: center;
+}
+
+.lime {background: lime}
+.green {background: green}
+.orange {background: orange}
+.orangered {background: orangered }
+.red {background: red}
+.darkred {background: darkred}
+.black {background: black}
